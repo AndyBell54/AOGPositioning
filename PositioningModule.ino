@@ -182,9 +182,11 @@ void loop() {
 		  i = 0;
 	  }
 	  if (c == 0x0d && newSentence) {  //if character is carriage return (\n) build UDP send buffer
-		  byte GPStoSend[i + 2];
+		  byte GPStoSend[i + 4];
 		  GPStoSend[0] = 0x80;
 		  GPStoSend[1] = 0x00;
+		  GPStoSend[i + 2] = 0x0d;	//Set second-last byte to CR (\r)
+		  GPStoSend[i + 3] = 0x0a;	//Set last byte to NL (\n)
 
 		  for (int j = 0; j < i; j++) {
 			  GPStoSend[j + 2] = (byte)gpsBuffer[j];
